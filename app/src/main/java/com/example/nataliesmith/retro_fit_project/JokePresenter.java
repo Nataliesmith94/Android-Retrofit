@@ -19,14 +19,10 @@ public class JokePresenter {
 
     public void getJokes(String textSearch)
     {
+        view.showLoading();
         interacter.getJokesFromApi(textSearch); //going to get jokes method in api
     }
 
-    public void showJokes(SearchJokes searchJokes) //passing in the search jokes class
-    {
-        ArrayList<Joke> jokes = searchJokes.getJokes();
-        view.successfulJoke(jokes);
-    }
 
     public void inputtedText(String textSearch)
     {
@@ -40,8 +36,34 @@ public class JokePresenter {
         }
     }
 
+    public void showJokes(SearchJokes searchJokes) //passing in the search jokes class
+    {
+        delayLoading();
+
+        view.hideLoading();
+        ArrayList<Joke> jokes = searchJokes.getJokes();
+
+        if (jokes == null || jokes.size() == 0)
+        {
+            JokesFailed();
+        }
+        else
+        {
+            view.successfulJoke(jokes);
+        }
+
+    }
     public void JokesFailed()
     {
         view.jokeFailed();
+    }
+
+    private void delayLoading()
+    {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
