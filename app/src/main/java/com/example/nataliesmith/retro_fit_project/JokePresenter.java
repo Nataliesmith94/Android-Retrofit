@@ -51,8 +51,8 @@ public class JokePresenter {
         {
             view.successfulJoke(jokes);
         }
-
     }
+
     public void JokesFailed()
     {
         view.jokeFailed();
